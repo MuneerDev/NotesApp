@@ -38,8 +38,10 @@ const addNoteToArray = (note) => {
 };
 
 onMounted(() => {
-  const Notes = JSON.parse(localStorage.getItem("NotesArray"));
-  NotesArray.value = Notes;
+  if (localStorage.getItem("NotesArray")) {
+    const Notes = JSON.parse(localStorage.getItem("NotesArray"));
+    NotesArray.value = Notes;
+  }
 });
 
 const DeleteNote = (SelectedNote) => {

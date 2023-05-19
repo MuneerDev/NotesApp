@@ -2,7 +2,7 @@
   <div class="pt-5">
     <div
       class="bg-white w-full px-5 py-7 sm:px-10 sm:py-10 rounded-full flex items-center overflow-hidden gap-3">
-      <div class="grid gap-2 flex-1">
+      <div class="grid gap-2 flex-1 min-w-[50px]">
         <input
           type="text"
           class="flex-1 shrink py-2 px-2 sm:py-5 sm:px-5 h-full outline-none rounded-full"

@@ -12,6 +12,12 @@
       cancel
     </button>
   </Model>
+  <ModelDelete
+    v-if="isDelete"
+    @close="closeModel"
+    @delete="confirmDelete = true">
+    ></ModelDelete
+  >
   <div class="container mx-auto max-w-[90%]">
     <Addnote @add="addNoteToArray"></Addnote>
     <NotesList
@@ -22,12 +28,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Addnote from "./components/addNote";
 import NotesList from "./components/NotesList";
 import Model from "./components/ModelForm";
+import ModelDelete from "./components/ModelDelete";
 
 const isEditing = ref(false);
+const isDelete = ref(false);
+const confirmDelete = ref(null);
 
 const currentindex = ref(null);
 
@@ -45,15 +54,30 @@ onMounted(() => {
 });
 
 const DeleteNote = (SelectedNote) => {
-  NotesArray.value.splice(SelectedNote.index, 1);
-  localStorage.setItem("NotesArray", JSON.stringify(NotesArray.value));
+  isDelete.value = true;
+  watch([isDelete, confirmDelete], ([isDeleteValue, confirmDeleteValue]) => {
+    if (isDeleteValue && confirmDeleteValue) {
+      NotesArray.value.splice(SelectedNote.index, 1);
+      closeModel();
+      confirmDelete.value = false;
+      localStorage.setItem("NotesArray", JSON.stringify(NotesArray.value));
+    }
+    if (isDeleteValue && confirmDeleteValue === false) {
+      confirmDelete.value = null;
+    }
+  });
 };
+
 const EditNote = (SelectedNote) => {
   isEditing.value = true;
   currentindex.value = SelectedNote.index;
 };
 const closeModel = () => {
-  isEditing.value = false;
+  if (isEditing.value) {
+    isEditing.value = false;
+  } else {
+    isDelete.value = false;
+  }
 };
 const saveEdit = (SelectedEdit) => {
   NotesArray.value[SelectedEdit.index].messege = SelectedEdit.EditMessege;

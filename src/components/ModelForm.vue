@@ -4,25 +4,27 @@
       <div
         @click.self="close"
         class="bg-black bg-opacity-50 absolute w-screen h-screen top-0 flex justify-center items-center">
-        <div class="bg-white w-1/2 p-7 rounded-lg grid">
-          <h2 class="text-3xl">Edit Note</h2>
-          <input
-            type="text"
-            class="bg-gray-100 my-3 px-2 py-3"
-            v-model="EditMessege" />
-          <input
-            type="text"
-            class="bg-gray-100 px-2 py-3 mb-3"
-            v-model="Editdesc" />
-          <div class="flex justify-end gap-3">
-            <slot> </slot>
-            <button
-              class="bg-green-500 px-3 py-2 rounded-xl text-white"
-              @click="save">
-              save
-            </button>
+        <Transition name="fade" appear>
+          <div class="bg-white w-1/2 p-7 rounded-lg grid">
+            <h2 class="text-3xl">Edit Note</h2>
+            <input
+              type="text"
+              class="bg-gray-100 my-3 px-2 py-3"
+              v-model="EditMessege" />
+            <input
+              type="text"
+              class="bg-gray-100 px-2 py-3 mb-3"
+              v-model="Editdesc" />
+            <div class="flex justify-end gap-3">
+              <slot> </slot>
+              <button
+                class="bg-green-500 px-3 py-2 rounded-xl text-white"
+                @click="save">
+                save
+              </button>
+            </div>
           </div>
-        </div>
+        </Transition>
       </div>
     </div>
   </Teleport>
